@@ -1,6 +1,6 @@
 # Marine Spatial Planning Module - Colin Attwood
 # Not just an ecological problem but social and economic too - we're ignoring that for now
-# You want to spread the protected areas around the country
+# You want to spread the protected areas around the country whilest conserving the largest number of species possible
 
 ED <- read.csv("EstuaryFishSurveyData.csv")
 install.packages("vegan")
@@ -10,24 +10,29 @@ library(dplyr)
 install.packages("ggplot2")
 library(ggplot2)
 
-#Getting rid of NAs
+#Getting rid of NAs in the data set 
 ED[is.na(ED)] <- 0
-# Specnumberrrrrr
-alpha <- specnumber(ED[4:148])
-ED$alpha <- specnumber(ED[4:148])
 
-# Extracting alpha diversity names but using Collins code and specnumber
+# Specnumber 
+#this is a function in the vegan package that allows you to sus out the alpha diversity (species richness) of the eastuaries
+alpha <- specnumber(ED[4:148]) 
+ED$alpha <- specnumber(ED[4:148]) #created a new column with the alpha diversity in ED
+
+# Using Colin's code to order the data in descending alpha diversity
 ED <- ED[order(-ED$alpha),]
 ED
+
+# Extracting the names of the top 20 most diverse estuaries
 Alphalist <- ED[1:20,1]
 Alphalist
 
-# To ensure that the kmWest is flipped in our plot we want to create a new column - kmEast
+# To ensure that the graph makes sense (geographically sound), flip kmWest to create a new column - kmEast
 ED$kmEast <- 2947 - ED$kmWest
 
-# Column for top 20 and others
+# Create a column for top 20 alpha diversity and others
 ED$highlight <- ifelse(rank(-ED$alpha) <=20, "top20alpha", "other")
-# Trying to create a plot
+
+# Create a scatter plot showing the top 20 eastuaries in terms of alpha diversity
 G1 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlight)) +
   scale_color_manual(values = c("top20alpha" = "#A36DAD", "other" = "#A0D4A1")) +
@@ -44,20 +49,26 @@ ED$alphalist[1:20] <- 1
 
 # Now we're trying to see the gamma diversity - trying to see the number of different species that would be protected if we chose these
 # We can use specnumber in the vegan package for this
+# In essense we're sussing the top 20 estuaries by splitting them into biogeographic zones (BZ) and getthing 6 from the WC and 7 from the SC and EC
+# In other word - we want to richness without the abundance
 alphabz <- specnumber(ED[4:148], groups = ED$alphalist)
 alphabz
+# output: 0 = 121; 1 = 116
 
-# Then order it to both BZ and alpha
+# Then order the data to both BZ and alpha
 ED <- ED[order(ED$BZ,-ED$alpha),]
 
+# Create a column for the richness with the different BZs 
 ED$alphabz <- 0
 ED$alphabz[1:7] <- 1 # tagging the first 6 from the East Coast
 ED$alphabz[91:97] <- 1 # tagging the first 7 from the South Coast
 ED$alphabz[207:212] <- 1 # tagging the first 7 from the West Coast
 ED$alphabz
 
+# Then another column for the highlighted BZ x alpha
 ED$highlightBZ <- ifelse(rank(-ED$alphabz) <=20, "top20alphabz", "other")
-# Trying to create a plot
+
+# Create a plot for BZ x alpha
 G2 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightBZ)) +
   scale_color_manual(values = c("top20alphabz" = "#A36DAD", "other" = "#A0D4A1")) +
@@ -65,13 +76,24 @@ G2 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   xlab("km East") +
   ylab ("AlphaBZ Diversity")
 G2
+
 # Aaaaand a list of these estuaries
 ED$alphabzlist <- 0
 ED$alphabzlist[1:7] <- 1
 ED$alphabzlist[91:97] <- 1
 ED$alphabzlist[207:212] <- 1
 
+#Extracting the names of these estuaries
+AlphaBZlistEC <- ED[1:7,1]
+AlphaBZlistSC <- ED[91:97,1]
+AlphaBZlistWC <- ED[207:212,1]
+
+AlphaBZlistEC
+AlphaBZlistSC
+AlphaBZlistWC
+
 # How many species are in the alphabz list
 alphabzspn <- specnumber(ED[4:148], groups = ED$alphabzlist)
 alphabzspn
+# output : 0 = 120; 1 = 122
 
