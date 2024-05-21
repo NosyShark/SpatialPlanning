@@ -124,21 +124,31 @@ Range
 Centre <- array(0, c(145))
 Centre
 
+Mode <- array(0, c(145))
+Mode
+
+max <- 0
+
 # Now we're going to make loops
 for(i in 1:145){ # this is the species loop
   for(j in 1:232){ # this is the estuary loop
     if(ED[j, i+3]>0){EL[i] <- ED[j,2]}
+    if(ED[j, i+3] > max){
+      Mode[i] <- ED[j, 2]
+      max <- ED[j,i+3]
+    }
   }
   for(j in 232:1){ # this is the estuary loop bottom up
     if(ED[j, i+3]>0){WL[i] <- ED[j,2]}
   }
   Range[i] <- WL[i] - EL[i] # range is between the two limits
-  Centre[i] <- (WL[i]+EL[i])/2
+  Centre[i] <- (WL[i]-EL[i])/2
 }
  
 EL   
 WL
 Range
+Mode
 Centre
 
-Centre <- as.numeric
+
