@@ -129,6 +129,18 @@ for(i in 1:145){ # this is the species loop
   for(j in 1:232){ # this is the estuary loop
     if(ED[j, i+3]>0){EL[i] <- ED[j,2]}
   }
+  for(j in 232:1){ # this is the estuary loop bottom up
+    if(ED[j, i+3]>0){WL[i] <- ED[j,2]}
+  }
+  for(j in 1:232){ # this is the estuary loop range
+      if(ED[j, i+3]>0){Range[i] <- ED[j,2]}
+    }
+  for(j in 1:232){ # this is the estuary loop centre
+    if(ED[j, i+3]>0){Centre[i] <- ED[j,2]}
+  }
 }
  
 EL   
+WL
+Range
+Centre
