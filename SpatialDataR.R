@@ -131,9 +131,10 @@ max <- 0
 
 # Now we're going to make loops
 for(i in 1:145){ # this is the species loop
+  max <- 0
   for(j in 1:232){ # this is the estuary loop
     if(ED[j, i+3]>0){EL[i] <- ED[j,2]}
-    if(ED[j, i+3] > max){
+    if(ED[j, i+3]>max){
       Mode[i] <- ED[j, 2]
       max <- ED[j,i+3]
     }
