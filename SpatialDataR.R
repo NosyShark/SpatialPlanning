@@ -18,6 +18,7 @@ ED[is.na(ED)] <- 0
 alpha <- specnumber(ED[4:148]) 
 ED$alpha <- specnumber(ED[4:148]) #created a new column with the alpha diversity in ED
 
+### Chunk 1
 # Using Colin's code to order the data in descending alpha diversity
 ED <- ED[order(-ED$alpha),]
 ED
@@ -55,6 +56,8 @@ alphabz <- specnumber(ED[4:148], groups = ED$alphalist)
 alphabz
 # output: 0 = 121; 1 = 116
 
+
+### Chunk 2
 # Then order the data to both BZ and alpha
 ED <- ED[order(ED$BZ,-ED$alpha),]
 
@@ -97,3 +100,35 @@ alphabzspn <- specnumber(ED[4:148], groups = ED$alphabzlist)
 alphabzspn
 # output : 0 = 120; 1 = 122
 
+### Chunk 3
+# We are going to figure out the mid ranges of each species
+# Problem also because some species have a bi modal dbn
+G3 <- ggplot(ED, aes(x = kmEast, y = Estuarine.bream)) + 
+  geom_point(aes(color = highlight)) +
+  scale_color_manual(values = c("top20alpha" = "#A36DAD", "other" = "#A0D4A1"))
+G3
+
+# Order data by kmWest
+ED <- ED[order(-ED$kmWest),]
+ED
+# Creating vectors for Western Limit, Eastern Limit, Range, and Centre 
+WL <- array(0, c(145))
+WL
+
+EL <- array(0, c(145))
+EL
+
+Range <- array(0, c(145))
+Range
+
+Centre <- array(0, c(145))
+Centre
+
+# Now we're going to make loops
+for(i in 1:145){ # this is the species loop
+  for(j in 1:232){ # this is the estuary loop
+    if(ED[j, i+3]>0){EL[i] <- ED[j,2]}
+  }
+}
+ 
+EL   
