@@ -103,7 +103,7 @@ alphabzspn
 ### Chunk 3
 # We are going to figure out the mid ranges of each species
 # Problem also because some species have a bi modal dbn
-G3 <- ggplot(ED, aes(x = kmEast, y = Estuarine.bream)) + 
+G3 <- ggplot(ED, aes(x = kmEast, y = Bald.glassy)) + 
   geom_point(aes(color = highlight)) +
   scale_color_manual(values = c("top20alpha" = "#A36DAD", "other" = "#A0D4A1"))
 G3
@@ -132,15 +132,13 @@ for(i in 1:145){ # this is the species loop
   for(j in 232:1){ # this is the estuary loop bottom up
     if(ED[j, i+3]>0){WL[i] <- ED[j,2]}
   }
-  for(j in 1:232){ # this is the estuary loop range
-      if(ED[j, i+3]>0){Range[i] <- ED[j,2]}
-    }
-  for(j in 1:232){ # this is the estuary loop centre
-    if(ED[j, i+3]>0){Centre[i] <- ED[j,2]}
-  }
+  Range[i] <- WL[i] - EL[i] # range is between the two limits
+  Centre[i] <- (WL[i]+EL[i])/2
 }
  
 EL   
 WL
 Range
 Centre
+
+Centre <- as.numeric
