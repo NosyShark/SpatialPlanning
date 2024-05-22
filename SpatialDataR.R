@@ -225,7 +225,7 @@ ED$cut80 <- slice
 ED <- ED[order(ED$cut80,-ED$alpha),]
 # Tagging chosen ones
 ED$clust <- 0
-ED$clust[c(1, 2, 35, 36, 44, 45, 46, 47, 48, 49, 193, 194, 197, 198, 208, 209, 210, 213, 214, 218)] <- 1
+ED$clust[c(1, 2, 35, 36, 44, 45, 46, 47, 48, 193, 194, 197, 198, 208, 209, 210, 213, 214, 215, 218)] <- 1
 
 
 # Highlight top 20 clusters
@@ -242,6 +242,6 @@ G5
 
 # Check the number of spp saved
 clustout <- specnumber(ED[4:148], groups = ED$clust)
-clustout # output: 0 = 127; 1 = 107 ~ 74%
+clustout # output: 0 = 121; 1 = 116 ~ 80%
 
 # note that this is good but excludes all estuaries without fish and so will be biased against plants and invertebrates
