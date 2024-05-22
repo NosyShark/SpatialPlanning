@@ -287,4 +287,3 @@ G6 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   ylab ("Alpha") +
   theme(legend.title = element_blank())
 G6
-
