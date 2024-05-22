@@ -226,7 +226,8 @@ ED <- ED[order(ED$cut80,-ED$alpha),]
 # Tagging chosen ones
 ED$clust <- 0
 ED$clust[c(1, 2, 35, 36, 44, 45, 46, 47, 48, 193, 194, 197, 198, 208, 209, 210, 213, 214, 215, 218)] <- 1
-
+Clustlist <- ED[c(1, 2, 35, 36, 44, 45, 46, 47, 48, 193, 194, 197, 198, 208, 209, 210, 213, 214, 215, 218),1]
+Clustlist
 
 # Highlight top 20 clusters
 ED$highlightclust <- ifelse(rank(-ED$clust) <=20, "chosen", "other")
@@ -243,5 +244,47 @@ G5
 # Check the number of spp saved
 clustout <- specnumber(ED[4:148], groups = ED$clust)
 clustout # output: 0 = 121; 1 = 116 ~ 80%
-
 # note that this is good but excludes all estuaries without fish and so will be biased against plants and invertebrates
+
+# Chunk 6
+# Now we will try to find an estuary that has the greatest dissimilarity to other estuaries
+# Order by Alpha 
+# Complist variable top Est = 1, others = 0
+# remove from database all spp that occur in that estuary
+# Reorder by alpha and repeat
+# 1. Create variable called complist
+
+NED <- ED
+NED$complist <- 0
+
+for(j in 1:20){
+  NED <- NED[order(-NED$alpha),]
+  NED$complist[1] <- 1
+  for(i in 1:145){
+    if(NED[1, i+3] > 0 ){NED[,i+3] <- 0}
+  }
+  NED$alpha <- specnumber(NED[,4:148])
+}
+
+NED$complist
+NED <- NED[order(-NED$complist),] 
+Complist <- NED[1:20,1]
+Complist
+
+ED <- ED[order(ED$kmWest),]
+NED <- NED[order(NED$kmWest),]
+ED$complist <- NED$complist
+compout <- specnumber(ED[4:148], groups = ED$complist)
+compout # output: 0 = 109; 1 = 135 ~ that's 93%
+
+ED$highlightcomp <- ifelse(rank(-ED$complist) <=20, "chosen", "other")
+# Plot
+G6 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlightcomp)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
+  ggtitle("Scatter Plot with Chosen Estuaries Highlighted") +
+  xlab("km East") +
+  ylab ("Alpha") +
+  theme(legend.title = element_blank())
+G6
+
