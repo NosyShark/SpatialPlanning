@@ -37,7 +37,7 @@ ED$highlight <- ifelse(rank(-ED$alpha) <=20, "chosen", "other")
 G1 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlight)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1")) +
-  ggtitle("Scatter Plot with Chosen Estuaries Highlighted") +
+  ggtitle("Possible MPA Estuaries") +
   xlab("km East") +
   ylab ("Alpha Diversity")+
   theme(legend.title = element_blank())
@@ -75,9 +75,9 @@ ED$highlightBZ <- ifelse(rank(-ED$alphabz) <=20, "chosen", "other")
 G2 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightBZ)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1")) +
-  ggtitle("Scatter Plot with Chosen Estuaries Highlighted") +
+  ggtitle("Possible MPA Estuaries") +
   xlab("km East") +
-  ylab ("AlphaBZ Diversity")+
+  ylab ("Alpha Diversity")+
   theme(legend.title = element_blank())
 G2
 
@@ -91,7 +91,7 @@ AlphaBZlistSC
 AlphaBZlistWC
 
 # How many species are in the alphabz list
-alphabzout <- specnumber(ED[4:148], groups = ED$alphabzlist)
+alphabzout <- specnumber(ED[4:148], groups = ED$alphabz)
 alphabzout # output : 0 = 120; 1 = 122 ~ that's 84%
 
 ### Chunk 3
@@ -179,7 +179,7 @@ ED$highlightmode <- ifelse(rank(-ED$modelist) <=20, "chosen", "other")
 G4 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightmode)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Scatter Plot with Chosen Estuaries Highlighted") +
+  ggtitle("Possible MPA Estuaries") +
   xlab("km East") +
   ylab ("Alpha") +
   theme(legend.title = element_blank())
@@ -235,7 +235,7 @@ ED$highlightclust <- ifelse(rank(-ED$clust) <=20, "chosen", "other")
 G5 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightclust)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Scatter Plot with Chosen Estuaries Highlighted") +
+  ggtitle("Possible MPA Estuaries") +
   xlab("km East") +
   ylab ("Alpha") +
   theme(legend.title = element_blank())
@@ -282,8 +282,61 @@ ED$highlightcomp <- ifelse(rank(-ED$complist) <=20, "chosen", "other")
 G6 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightcomp)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Scatter Plot with Chosen Estuaries Highlighted") +
+  ggtitle("Possible MPA Estuaries") +
   xlab("km East") +
   ylab ("Alpha") +
   theme(legend.title = element_blank())
 G6
+
+# We are trying the brute force method now
+# Select 20 estuaries at random from the list - tally up the spp in the 20 and record the number, reshuffle record the number if the number is higher, save the list, rinse and repeat until you find the highest number and then let's see
+random_order <- sample(nrow(ED))
+ED20 <- ED[order(random_order),]
+
+maxspp <- 0 
+div <- 0
+randlist <- array(0, c(20))
+randlist <- as.character(randlist)
+for(i in 1:500000){
+  div <- 0
+  ED20 <- ED[sample(1:nrow(ED), 20, replace = FALSE),]
+  for(i in 1:145){
+    if(sum(ED20[,i+3])>0){
+      div <- div+1
+    }
+  }
+  if(div > maxspp){
+      maxspp <- div
+      randlist <- ED20[1:20, 1]
+  }
+}
+maxspp/145
+randlist
+
+# Creating a mode list
+ED$randlist <- 0
+# List of locations to set modelist to 1
+locations2 <- c("Mlalazi", "Olifants", "Matigulu/Nyoni", "Groot (East)", "Klein Brak", "Manzimtoti", "Kwenxura", "Gqutywa", "Bot", "Gwaing" , "Kaaimans", "Mgwetyana", "Tyolomnqa", "Mvoti", "Mpenjati", "St Lucia", "Mapuzi", "Knysna", "Kwelera", "Zalu")
+# Set modelist to 1
+ED <- ED %>%
+  mutate(randlist = ifelse(ED$Estuary %in% locations2, 1, 0))
+
+
+ED$highlightrand <- ifelse(rank(-ED$randlist) <=20, "chosen", "other")
+# Plot
+G7 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlightrand)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
+  ggtitle("Possible MPA Estuaries") +
+  xlab("km East") +
+  ylab ("Alpha") +
+  theme(legend.title = element_blank())
+G7
+
+
+# Chunk 8
+# Run through the actual list and see how many spp it protects
+
+
+# Chunk 9
+# Compare all 20 lists and see which combo is the best?
