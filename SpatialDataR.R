@@ -246,6 +246,7 @@ clustout <- specnumber(ED[4:148], groups = ED$clust)
 clustout # output: 0 = 121; 1 = 116 ~ 80%
 # note that this is good but excludes all estuaries without fish and so will be biased against plants and invertebrates
 
+
 # Chunk 6
 # Now we will try to find an estuary that has the greatest dissimilarity to other estuaries
 # Order by Alpha 
@@ -288,6 +289,8 @@ G6 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   theme(legend.title = element_blank())
 G6
 
+
+# Chunk 7
 # We are trying the brute force method now
 # Select 20 estuaries at random from the list - tally up the spp in the 20 and record the number, reshuffle record the number if the number is higher, save the list, rinse and repeat until you find the highest number and then let's see
 random_order <- sample(nrow(ED))
@@ -297,7 +300,7 @@ maxspp <- 0
 div <- 0
 randlist <- array(0, c(20))
 randlist <- as.character(randlist)
-for(i in 1:500000){
+for(i in 1:500){
   div <- 0
   ED20 <- ED[sample(1:nrow(ED), 20, replace = FALSE),]
   for(i in 1:145){
@@ -336,7 +339,33 @@ G7
 
 # Chunk 8
 # Run through the actual list and see how many spp it protects
+# Creating a mode list
+ED$DFFElist <- 0
+# List of locations to set modelist to 1
+locations3 <- c("Orange", "Spoeg", "Krom", "Heuningnes", "Klipdriftsfontein", "Goukou", "Swartvlei", "Goukamma", "Knysna", "Sout", "Groot (W)", "Bloukrans", "Lottering", "Elandsbos", "Storms", "Elands", "Groot (O)", "Sundays", "Mbashe", "Ku-Mpenzu", "Ku-Bhula", "Ntlonyane", "Msikaba", "Mtentu", "Mzamba", "Mpenjati", "Umhlangankulu", "Mgeni", "Mhlanga", "Mdloti", "Mlalazi", "St Lucia", "Kosi")
+# Set modelist to 1
+ED <- ED %>%
+  mutate(DFFElist = ifelse(ED$Estuary %in% locations3, 1, 0))
+
+
+ED$highlightDFFE <- ifelse(rank(-ED$DFFElist) <=20, "chosen", "other")
+# Plot
+G8 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlightDFFE)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
+  ggtitle("Possible MPA Estuaries") +
+  xlab("km East") +
+  ylab ("Alpha") +
+  theme(legend.title = element_blank())
+G8
+
+
+DFFEout <- specnumber(ED[4:148], groups = ED$DFFElist)
+DFFEout # output: 0 = 127; 1 = 106
+locations3
 
 
 # Chunk 9
 # Compare all 20 lists and see which combo is the best?
+
+
