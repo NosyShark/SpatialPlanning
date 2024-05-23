@@ -37,7 +37,7 @@ ED$highlight <- ifelse(rank(-ED$alpha) <=20, "chosen", "other")
 G1 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlight)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1")) +
-  ggtitle("Possible MPA Estuaries") +
+  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
   ylab ("Alpha Diversity")+
   theme(legend.title = element_blank())
@@ -75,7 +75,7 @@ ED$highlightBZ <- ifelse(rank(-ED$alphabz) <=20, "chosen", "other")
 G2 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightBZ)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1")) +
-  ggtitle("Possible MPA Estuaries") +
+  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
   ylab ("Alpha Diversity")+
   theme(legend.title = element_blank())
@@ -179,7 +179,7 @@ ED$highlightmode <- ifelse(rank(-ED$modelist) <=20, "chosen", "other")
 G4 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightmode)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Possible MPA Estuaries") +
+  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
   ylab ("Alpha") +
   theme(legend.title = element_blank())
@@ -235,7 +235,7 @@ ED$highlightclust <- ifelse(rank(-ED$clust) <=20, "chosen", "other")
 G5 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightclust)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Possible MPA Estuaries") +
+  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
   ylab ("Alpha") +
   theme(legend.title = element_blank())
@@ -283,7 +283,7 @@ ED$highlightcomp <- ifelse(rank(-ED$complist) <=20, "chosen", "other")
 G6 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightcomp)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Possible MPA Estuaries") +
+  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
   ylab ("Alpha") +
   theme(legend.title = element_blank())
@@ -330,7 +330,7 @@ ED$highlightrand <- ifelse(rank(-ED$randlist) <=20, "chosen", "other")
 G7 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightrand)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Possible MPA Estuaries") +
+  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
   ylab ("Alpha") +
   theme(legend.title = element_blank())
@@ -353,7 +353,7 @@ ED$highlightDFFE <- ifelse(rank(-ED$DFFElist) <=20, "chosen", "other")
 G8 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightDFFE)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Possible MPA Estuaries") +
+  ggtitle("Existing Estuarine MPAs") +
   xlab("km East") +
   ylab ("Alpha") +
   theme(legend.title = element_blank())
@@ -366,6 +366,46 @@ locations3
 
 
 # Chunk 9
-# Compare all 20 lists and see which combo is the best?
+# Compare all lists of 20 and see which combo is the best?
+List <- ED[, c(1, 152, 153, 155, 158, 160, 162)]
+
+# Calculate the frequency of each estuary being chosen
+List$Frequency <- rowSums(List[, -1])
+
+# Create a frequency table showing the estuaries and their corresponding frequencies
+frequency_table <- List[, c("Estuary", "Frequency")]
+
+# Sort the frequency table by the Frequency column in descending order (optional)
+frequency_table <- frequency_table[order(-frequency_table$Frequency), ]
+
+# Display the frequency table
+print(frequency_table)
+
+# Now with the DFFE List
+List2 <- ED[, c(1, 152, 153, 155, 158, 160, 162, 164)]
+
+# Calculate the frequency of each estuary being chosen
+List2$Frequency <- rowSums(List2[, -1])
+
+# Create a frequency table showing the estuaries and their corresponding frequencies
+frequency_table2 <- List2[, c("Estuary", "Frequency")]
+
+# Sort the frequency table by the Frequency column in descending order (optional)
+frequency_table2 <- frequency_table2[order(-frequency_table2$Frequency), ]
+
+# Display the frequency table
+print(frequency_table2)
 
 
+# I want to compare the DFFE list to the Complement list and add from there (also including alphalist to cross reference in case there are more than 5 overflow of complist)
+List3 <- List2[, c(1, 2, 6, 8)]
+List3$Frequency <- rowSums(List3[, -1])
+
+# Create a frequency table showing the estuaries and their corresponding frequencies
+frequency_table3 <- List3[, c("Estuary", "Frequency")]
+
+# Sort the frequency table by the Frequency column in descending order (optional)
+frequency_table3 <- frequency_table3[order(-frequency_table3$Frequency), ]
+
+# Display the frequency table
+print(frequency_table3)
