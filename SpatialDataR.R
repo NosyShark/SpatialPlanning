@@ -9,6 +9,8 @@ install.packages("dplyr")
 library(dplyr)
 install.packages("ggplot2")
 library(ggplot2)
+install.packages("patchwork")
+library(patchwork)
 
 #Getting rid of NAs in the data set 
 ED[is.na(ED)] <- 0
@@ -344,6 +346,7 @@ for(i in 1:500000){
   }
 }
 maxspp/145
+maxspp
 randlist # <- c("Mlalazi", "Olifants", "Matigulu/Nyoni", "Groot (East)", "Klein Brak", "Manzimtoti", "Kwenxura", "Gqutywa", "Bot", "Gwaing" , "Kaaimans", "Mgwetyana", "Tyolomnqa", "Mvoti", "Mpenjati", "St Lucia", "Mapuzi", "Knysna", "Kwelera", "Zalu")
 randout <- specnumber(ED[4:148], groups = ED$randlist)
 randout
@@ -568,3 +571,153 @@ compout <- specnumber(ED[, 4:148], groups = ED$complist2)
 compout  # This should now cover all species
 
 num_estuaries_needed  # Number of estuaries needed to cover all species
+
+
+# Facet wrapping some shit
+# Combine the plots into a single layout
+#combined_plot <- (G1 + G2 + G3 + G4) / (G5 + G6 + G7 + G8)
+
+# Display the combined plot
+#print(combined_plot)
+G9 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlight)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1")) +
+  xlab("km East") +
+  ylab ("Alpha Diversity")+
+  labs(color = "Estuaries")+
+  labs(title = "a. Alpha")+
+  theme(plot.title = element_text(size = 10),
+        legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")),
+        axis.line = element_line(),
+        axis.title.x = element_text(size = 8),
+        axis.title.y = element_text(size = 8))
+
+G9
+G10 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlightBZ)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1")) +
+  xlab("km East") +
+  ylab ("Alpha Diversity")+
+  labs(color = "Estuaries")+
+  labs(title = "b. Alpha BZ")+
+  theme(plot.title = element_text(size = 10),
+        legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line(),
+        axis.title.x = element_text(size = 8),
+        axis.title.y = element_text(size = 8))
+G10
+G11 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlightmode)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
+  xlab("km East") +
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  labs(title = "c. Mode")+
+  theme(plot.title = element_text(size = 10),
+        legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line(),
+        axis.title.x = element_text(size = 8),
+        axis.title.y = element_text(size = 8))
+G11
+G12 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlightclust)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
+  xlab("km East") +
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  labs(title = "d. Spp Composition")+
+  theme(plot.title = element_text(size = 10),
+        legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line(),
+        axis.title.x = element_text(size = 8),
+        axis.title.y = element_text(size = 8))
+G12
+G13 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlightcomp)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
+  xlab("km East") +
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  labs(title = "e. Complementary")+
+  theme(plot.title = element_text(size = 10),
+        legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line(),
+        axis.title.x = element_text(size = 8),
+        axis.title.y = element_text(size = 8))
+G13
+G14 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlightrand)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
+  xlab("km East") +
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  labs(title= "f. Random")+
+  theme(plot.title = element_text(size = 10),
+        legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line(),
+        axis.title.x = element_text(size = 8),
+        axis.title.y = element_text(size = 8))
+G14
+G15 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
+  geom_point(aes(color = highlightDFFE)) +
+  scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
+  xlab("km East") +
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  labs(title = "g. Existing MPAs")+
+  theme(plot.title = element_text(size = 10),
+        legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line(),
+        axis.title.x = element_text(size = 8),
+        axis.title.y = element_text(size = 8))
+G15
+# Combine plots
+combined_plot <- G9 + G10 +  G11 + G12 + G13 + G14 + G15 + plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+# Add a common title
+#combined_plot <- combined_plot + plot_annotation(title = "Combined Estuary Plots with Common Legend")
+
+# Display the combined plot
+combined_plot
