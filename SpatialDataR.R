@@ -37,10 +37,16 @@ ED$highlight <- ifelse(rank(-ED$alpha) <=20, "chosen", "other")
 G1 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlight)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1")) +
-  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
   ylab ("Alpha Diversity")+
-  theme(legend.title = element_blank())
+  labs(color = "Estuaries")+
+  theme(legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line())
 
 G1
 
@@ -75,10 +81,16 @@ ED$highlightBZ <- ifelse(rank(-ED$alphabz) <=20, "chosen", "other")
 G2 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightBZ)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1")) +
-  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
   ylab ("Alpha Diversity")+
-  theme(legend.title = element_blank())
+  labs(color = "Estuaries")+
+  theme(legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line())
 G2
 
 #Extracting the names of these estuaries
@@ -179,10 +191,16 @@ ED$highlightmode <- ifelse(rank(-ED$modelist) <=20, "chosen", "other")
 G4 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightmode)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
-  ylab ("Alpha") +
-  theme(legend.title = element_blank())
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  theme(legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line())
 G4
 
 # Check how many species are saved in this
@@ -235,10 +253,16 @@ ED$highlightclust <- ifelse(rank(-ED$clust) <=20, "chosen", "other")
 G5 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightclust)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
-  ylab ("Alpha") +
-  theme(legend.title = element_blank())
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  theme(legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line())
 G5
 
 # Check the number of spp saved
@@ -248,7 +272,7 @@ clustout # output: 0 = 121; 1 = 116 ~ 80%
 
 
 # Chunk 6
-# Now we will try to find an estuary that has the greatest dissimilarity to other estuaries
+# Now we will try to find an estuary that has the greatest complementary to other estuaries
 # Order by Alpha 
 # Complist variable top Est = 1, others = 0
 # remove from database all spp that occur in that estuary
@@ -283,10 +307,16 @@ ED$highlightcomp <- ifelse(rank(-ED$complist) <=20, "chosen", "other")
 G6 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightcomp)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
-  ylab ("Alpha") +
-  theme(legend.title = element_blank())
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  theme(legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line())
 G6
 
 
@@ -300,7 +330,7 @@ maxspp <- 0
 div <- 0
 randlist <- array(0, c(20))
 randlist <- as.character(randlist)
-for(i in 1:500){
+for(i in 1:500000){
   div <- 0
   ED20 <- ED[sample(1:nrow(ED), 20, replace = FALSE),]
   for(i in 1:145){
@@ -314,8 +344,9 @@ for(i in 1:500){
   }
 }
 maxspp/145
-randlist
-
+randlist # <- c("Mlalazi", "Olifants", "Matigulu/Nyoni", "Groot (East)", "Klein Brak", "Manzimtoti", "Kwenxura", "Gqutywa", "Bot", "Gwaing" , "Kaaimans", "Mgwetyana", "Tyolomnqa", "Mvoti", "Mpenjati", "St Lucia", "Mapuzi", "Knysna", "Kwelera", "Zalu")
+randout <- specnumber(ED[4:148], groups = ED$randlist)
+randout
 # Creating a mode list
 ED$randlist <- 0
 # List of locations to set modelist to 1
@@ -330,10 +361,16 @@ ED$highlightrand <- ifelse(rank(-ED$randlist) <=20, "chosen", "other")
 G7 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightrand)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Possible Esturaine MPAs") +
   xlab("km East") +
-  ylab ("Alpha") +
-  theme(legend.title = element_blank())
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  theme(legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line())
 G7
 
 
@@ -353,15 +390,21 @@ ED$highlightDFFE <- ifelse(rank(-ED$DFFElist) <=20, "chosen", "other")
 G8 <- ggplot(ED, aes(x = kmEast, y = alpha)) + 
   geom_point(aes(color = highlightDFFE)) +
   scale_color_manual(values = c("chosen" = "#A36DAD", "other" = "#A0D4A1"))+
-  ggtitle("Existing Estuarine MPAs") +
   xlab("km East") +
-  ylab ("Alpha") +
-  theme(legend.title = element_blank())
+  ylab ("Alpha Diversity") +
+  labs(color = "Estuaries")+
+  theme(legend.title = element_text(size = 9),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0, 1),
+        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        axis.ticks.length=unit(-0.1, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.line = element_line())
 G8
 
 
 DFFEout <- specnumber(ED[4:148], groups = ED$DFFElist)
-DFFEout # output: 0 = 127; 1 = 106
+DFFEout # output: 0 = 127; 1 = 106 ~ 73%
 locations3
 
 
@@ -409,3 +452,68 @@ frequency_table3 <- frequency_table3[order(-frequency_table3$Frequency), ]
 
 # Display the frequency table
 print(frequency_table3)
+
+# Separating the DFFE list from the others to see which ones the DFFE are protecting that do not appear in any of the other recommendations
+# Identify the estuaries in the last list (List7)
+last_list_estuaries <- List2$Estuary[List2$DFFElist == 1]
+
+# Identify the estuaries in all the other lists (List1 to List6)
+other_lists_estuaries <- List2$Estuary[rowSums(List2[, c("alphalist", "alphabz", "modelist", "clust", "randlist", "complist")]) > 0]
+
+
+# Find the estuaries that are in the last list but not in any of the other lists
+unique_last_list_estuaries <- setdiff(last_list_estuaries, other_lists_estuaries)
+
+# Display the unique estuaries in the last list
+print(unique_last_list_estuaries)
+
+# And finding the common estuaries in both
+# Find the estuaries that are in both the last list and any of the other lists
+common_estuaries <- intersect(last_list_estuaries, other_lists_estuaries)
+
+# Display the common estuaries
+print(common_estuaries)
+
+
+# Doing the same for the Complementary List and DFFE list
+last_list_estuaries2 <- List3$Estuary[List3$DFFElist == 1]
+
+# Identify the estuaries in all the other lists (List1 to List6)
+other_lists_estuaries2 <- List3$Estuary[rowSums(List3[, c("alphalist", "complist")]) > 0]
+
+
+# Find the estuaries that are in the last list but not in any of the other lists
+unique_last_list_estuaries2 <- setdiff(last_list_estuaries2, other_lists_estuaries2)
+
+# Display the unique estuaries in the last list
+print(unique_last_list_estuaries2)
+
+# And finding the common estuaries in both
+# Find the estuaries that are in both the last list and any of the other lists
+common_estuaries2 <- intersect(last_list_estuaries2, other_lists_estuaries2)
+
+# Display the common estuaries
+print(common_estuaries2)
+
+# Working out how much we stand to protect by adding 5 more estuaries 
+locations4 <- c("Orange", "Spoeg", "Krom", "Heuningnes", "Klipdriftsfontein", "Goukou", "Swartvlei", "Goukamma", "Knysna", "Sout", "Groot (W)", "Bloukrans", "Lottering", "Elandsbos", "Storms", "Elands", "Groot (O)", "Sundays", "Mbashe", "Ku-Mpenzu", "Ku-Bhula", "Ntlonyane", "Msikaba", "Mtentu", "Mzamba", "Mpenjati", "Umhlangankulu", "Mgeni", "Mhlanga", "Mdloti", "Mlalazi", "St Lucia", "Kosi", "Kwelera", "Matigulu/Nyoni", "Manzimtoti", "Tyolomnqa", "Great Fish")
+ED <- ED %>%
+  mutate(DFFE2list = ifelse(ED$Estuary %in% locations4, 1, 0))
+DFFE2out <- specnumber(ED[4:148], groups = ED$DFFE2list)
+DFFE2out
+
+locations5<- c("Orange", "Spoeg", "Krom", "Heuningnes", "Klipdriftsfontein", "Goukou", "Swartvlei", "Goukamma", "Knysna", "Sout", "Groot (W)", "Bloukrans", "Lottering", "Elandsbos", "Storms", "Elands", "Groot (O)", "Sundays", "Mbashe", "Ku-Mpenzu", "Ku-Bhula", "Ntlonyane", "Msikaba", "Mtentu", "Mzamba", "Mpenjati", "Umhlangankulu", "Mgeni", "Mhlanga", "Mdloti", "Mlalazi", "St Lucia", "Kosi", "Matigulu/Nyoni", "Mngazana", "Kariega", "Kwelera", "Mntafufu")
+ED <- ED %>%
+  mutate(DFFE3list = ifelse(ED$Estuary %in% locations5, 1, 0))
+DFFE3out <- specnumber(ED[4:148], groups = ED$DFFE3list)
+DFFE3out
+
+
+
+# This was the first legend adjustments
+theme(legend.title = element_blank(),
+      legend.justification = c("left", "top"),
+      panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+      axis.ticks.length=unit(-0.1, "cm"), 
+      axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+      axis.line = element_line())
