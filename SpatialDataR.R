@@ -500,14 +500,19 @@ locations4 <- c("Orange", "Spoeg", "Krom", "Heuningnes", "Klipdriftsfontein", "G
 ED <- ED %>%
   mutate(DFFE2list = ifelse(ED$Estuary %in% locations4, 1, 0))
 DFFE2out <- specnumber(ED[4:148], groups = ED$DFFE2list)
-DFFE2out
+DFFE2out # output: 0 = 117; 1 = 124 ~ 86%
 
-locations5<- c("Orange", "Spoeg", "Krom", "Heuningnes", "Klipdriftsfontein", "Goukou", "Swartvlei", "Goukamma", "Knysna", "Sout", "Groot (W)", "Bloukrans", "Lottering", "Elandsbos", "Storms", "Elands", "Groot (O)", "Sundays", "Mbashe", "Ku-Mpenzu", "Ku-Bhula", "Ntlonyane", "Msikaba", "Mtentu", "Mzamba", "Mpenjati", "Umhlangankulu", "Mgeni", "Mhlanga", "Mdloti", "Mlalazi", "St Lucia", "Kosi", "Matigulu/Nyoni", "Mngazana", "Kariega", "Kwelera", "Mntafufu")
+locations5<- c("Orange", "Spoeg", "Krom", "Heuningnes", "Klipdriftsfontein", "Goukou", "Swartvlei", "Goukamma", "Knysna", "Sout", "Groot (W)", "Bloukrans", "Lottering", "Elandsbos", "Storms", "Elands", "Groot (O)", "Sundays", "Mbashe", "Ku-Mpenzu", "Ku-Bhula", "Ntlonyane", "Msikaba", "Mtentu", "Mzamba", "Mpenjati", "Umhlangankulu", "Mgeni", "Mhlanga", "Mdloti", "Mlalazi", "St Lucia", "Kosi", "Matigulu/Nyoni", "Mngazana", "Kariega", "Mtamvuna", "Mntafufu")
 ED <- ED %>%
   mutate(DFFE3list = ifelse(ED$Estuary %in% locations5, 1, 0))
 DFFE3out <- specnumber(ED[4:148], groups = ED$DFFE3list)
-DFFE3out
+DFFE3out # output: 0 = 120; 1 = 117 ~81%
 
+locations6<- c("Orange", "Spoeg", "Krom", "Heuningnes", "Klipdriftsfontein", "Goukou", "Swartvlei", "Goukamma", "Knysna", "Sout", "Groot (W)", "Bloukrans", "Lottering", "Elandsbos", "Storms", "Elands", "Groot (O)", "Sundays", "Mbashe", "Ku-Mpenzu", "Ku-Bhula", "Ntlonyane", "Msikaba", "Mtentu", "Mzamba", "Mpenjati", "Umhlangankulu", "Mgeni", "Mhlanga", "Mdloti", "Mlalazi", "St Lucia", "Kosi", "Matigulu/Nyoni", "Kwelera", "Mngazana", "Kariega", "Mntafufu")
+ED <- ED %>%
+  mutate(DFFE4list = ifelse(ED$Estuary %in% locations6, 1, 0))
+DFFE4out <- specnumber(ED[4:148], groups = ED$DFFE4list)
+DFFE4out # output: 0 = 117; 1 = 119 ~ 82%
 
 
 # This was the first legend adjustments
@@ -517,3 +522,49 @@ theme(legend.title = element_blank(),
       axis.ticks.length=unit(-0.1, "cm"), 
       axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
       axis.line = element_line())
+
+# Checking how many MPAs I have to create with complementarity to protect all spp
+# Add a column to keep track of complementarity list
+total_species <- colnames(ED)[4:ncol(ED)]  # Assuming species data starts at the 4th column
+covered_species <- vector()  # To track species covered by the selected estuaries
+selected_estuaries <- vector() 
+NED2 <- ED 
+NED2$complist2 <- 0
+
+# Complementarity analysis to cover all species
+while(length(covered_species) < length(total_species)) {
+  # Order NED by some criteria, here assumed as alpha-diversity (number of species)
+  NED2 <- NED2[order(-specnumber(NED2[, 4:ncol(NED2)])), ]
+  
+  # Mark the first estuary in the ordered list
+  NED2$complist2[1] <- 1
+  selected_estuaries <- c(selected_estuaries, NED2[1, 1])  # Assuming the first column is EstuaryID
+  
+  # Update the covered species list
+  new_species <- which(NED2[1, 4:ncol(NED2)] > 0)
+  covered_species <- unique(c(covered_species, colnames(NED2)[new_species + 3]))  # Offset by 3 for the metadata columns
+  
+  # Remove the species covered by the selected estuary from further consideration
+  for (i in new_species) {
+    NED2[, i + 3] <- 0  # Offset by 3 for the metadata columns
+  }
+  
+  # Recalculate alpha-diversity
+  NED2$alpha <- specnumber(NED2[, 4:ncol(NED2)])
+}
+
+# Output the number of estuaries needed to cover all species
+num_estuaries_needed <- length(selected_estuaries)
+selected_estuaries  # These are the estuaries selected to cover all species
+
+
+# Assign the complist back to the original data frame
+ED <- ED[order(-ED$kmWest),]
+NED2 <- NED2[order(-NED2$kmWest),]
+ED$complist2 <- NED2$complist2
+
+# Check the complementarity output
+compout <- specnumber(ED[, 4:148], groups = ED$complist2)
+compout  # This should now cover all species
+
+num_estuaries_needed  # Number of estuaries needed to cover all species
