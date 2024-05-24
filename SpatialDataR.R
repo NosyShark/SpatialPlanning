@@ -604,8 +604,7 @@ G9 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   labs(title = "a. Alpha")+
   theme(plot.title = element_text(size = 10),
         legend.title = element_text(size = 9),
-        legend.position = c(0.05, 0.95),
-        legend.justification = c(0, 1),
+        legend.position = "none",
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -624,8 +623,7 @@ G10 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   labs(title = "b. Alpha BZ")+
   theme(plot.title = element_text(size = 10),
         legend.title = element_text(size = 9),
-        legend.position = c(0.05, 0.95),
-        legend.justification = c(0, 1),
+        legend.position = "none",
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -643,8 +641,7 @@ G11 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   labs(title = "c. Mode")+
   theme(plot.title = element_text(size = 10),
         legend.title = element_text(size = 9),
-        legend.position = c(0.05, 0.95),
-        legend.justification = c(0, 1),
+        legend.position = "none",
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -662,8 +659,7 @@ G12 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   labs(title = "d. Spp Composition")+
   theme(plot.title = element_text(size = 10),
         legend.title = element_text(size = 9),
-        legend.position = c(0.05, 0.95),
-        legend.justification = c(0, 1),
+        legend.position = "none",
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -681,8 +677,7 @@ G13 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   labs(title = "e. Complementary")+
   theme(plot.title = element_text(size = 10),
         legend.title = element_text(size = 9),
-        legend.position = c(0.05, 0.95),
-        legend.justification = c(0, 1),
+        legend.position = "none",
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -700,8 +695,7 @@ G14 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   labs(title= "f. Random")+
   theme(plot.title = element_text(size = 10),
         legend.title = element_text(size = 9),
-        legend.position = c(0.05, 0.95),
-        legend.justification = c(0, 1),
+        legend.position = "none",
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -719,8 +713,7 @@ G15 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   labs(title = "g. Existing MPAs")+
   theme(plot.title = element_text(size = 10),
         legend.title = element_text(size = 9),
-        legend.position = c(0.05, 0.95),
-        legend.justification = c(0, 1),
+        legend.position = "none",
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -729,11 +722,49 @@ G15 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
         axis.title.x = element_text(size = 8),
         axis.title.y = element_text(size = 8))
 G15
+
+empty_plot <- ggplot() + 
+  theme_void() + 
+  theme(
+    legend.position = "none"  # No legend for the placeholder
+  )
+
+
 # Combine plots
-combined_plot <- G9 + G10 +  G11 + G12 + G13 + G14 + G15 + plot_layout(guides = "collect") & theme(legend.position = "bottom")
+combined_plot <- G9 + G10 +  G11 + G12 + G13 + G14 + G15 + 
+  plot_layout(guides = "collect") & 
+  theme(
+    legend.position = "bottom",  # Position the legend at the bottom
+    legend.justification = c(1, 0),# Adjust the justification to ensure it is at the bottom right
+    legend.direction = "vertical",
+    legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  # Add border to the legend
+    legend.margin = margin(t = 0.2, r = 0.2, b = 0.2, l = 0.2, unit = "cm")  # Optional: Add some margin around the legend
+  ) 
+
 
 # Add a common title
 #combined_plot <- combined_plot + plot_annotation(title = "Combined Estuary Plots with Common Legend")
 
 # Display the combined plot
 combined_plot
+
+combined_plot2 <- (G9 | G10 | G11) / (G12 | G13 | G14 | empty_plot) +
+  plot_layout(guides = "collect", widths = c(1, 1, 1, 1), heights = c(1, 1)) & 
+  theme(
+    legend.position = "bottomright",  # Position the legend at the bottom right
+    legend.justification = "center",  # Center the legend horizontally
+    legend.direction = "vertical",  # Arrange the legend items vertically
+    legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  # Add border to the legend
+    legend.margin = margin(t = 0.2, r = 0.2, b = 0.2, l = 0.2, unit = "cm")  # Optional: Add some margin around the legend
+  )
+
+combined_plot2
+
+
+theme(
+  legend.position = "bottom",  # Position the legend at the bottom
+  legend.justification = c(1, 0),# Adjust the justification to ensure it is at the bottom right
+  legend.direction = "vertical",
+  legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  # Add border to the legend
+  legend.margin = margin(t = 0.2, r = 0.2, b = 0.2, l = 0.2, unit = "cm")  # Optional: Add some margin around the legend
+)
