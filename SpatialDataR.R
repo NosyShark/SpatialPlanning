@@ -42,9 +42,11 @@ G1 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   xlab("km East") +
   ylab ("Alpha Diversity")+
   labs(color = "Estuaries")+
-  theme(legend.title = element_text(size = 9),
+  theme(legend.title = element_text(size = 8),
         legend.position = c(0.05, 0.95),
         legend.justification = c(0, 1),
+        legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  
+        legend.text = element_text(size = 7),
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -86,9 +88,11 @@ G2 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   xlab("km East") +
   ylab ("Alpha Diversity")+
   labs(color = "Estuaries")+
-  theme(legend.title = element_text(size = 9),
+  theme(legend.title = element_text(size = 8),
         legend.position = c(0.05, 0.95),
         legend.justification = c(0, 1),
+        legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  
+        legend.text = element_text(size = 7),
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -196,9 +200,11 @@ G4 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   xlab("km East") +
   ylab ("Alpha Diversity") +
   labs(color = "Estuaries")+
-  theme(legend.title = element_text(size = 9),
+  theme(legend.title = element_text(size = 8),
         legend.position = c(0.05, 0.95),
         legend.justification = c(0, 1),
+        legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  
+        legend.text = element_text(size = 7),
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -258,9 +264,11 @@ G5 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   xlab("km East") +
   ylab ("Alpha Diversity") +
   labs(color = "Estuaries")+
-  theme(legend.title = element_text(size = 9),
+  theme(legend.title = element_text(size = 8),
         legend.position = c(0.05, 0.95),
         legend.justification = c(0, 1),
+        legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  
+        legend.text = element_text(size = 7),
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -312,9 +320,11 @@ G6 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   xlab("km East") +
   ylab ("Alpha Diversity") +
   labs(color = "Estuaries")+
-  theme(legend.title = element_text(size = 9),
+  theme(legend.title = element_text(size = 8),
         legend.position = c(0.05, 0.95),
         legend.justification = c(0, 1),
+        legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  
+        legend.text = element_text(size = 7),
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -367,9 +377,11 @@ G7 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   xlab("km East") +
   ylab ("Alpha Diversity") +
   labs(color = "Estuaries")+
-  theme(legend.title = element_text(size = 9),
+  theme(legend.title = element_text(size = 8),
         legend.position = c(0.05, 0.95),
         legend.justification = c(0, 1),
+        legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  
+        legend.text = element_text(size = 7),
         panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
@@ -396,10 +408,14 @@ G8 <- ggplot(ED, aes(x = kmEast, y = alpha)) +
   xlab("km East") +
   ylab ("Alpha Diversity") +
   labs(color = "Estuaries")+
-  theme(legend.title = element_text(size = 9),
+  theme(legend.title = element_text(size = 8),
         legend.position = c(0.05, 0.95),
         legend.justification = c(0, 1),
-        panel.border=element_blank(), panel.background=element_blank(), panel.grid = element_blank(), 
+        legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),  
+        legend.text = element_text(size = 7), 
+        panel.border=element_blank(), 
+        panel.background=element_blank(), 
+        panel.grid = element_blank(), 
         axis.ticks.length=unit(-0.1, "cm"), 
         axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
         axis.line = element_line())
